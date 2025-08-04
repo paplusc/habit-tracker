@@ -117,7 +117,7 @@
 
     /* Added styling for the current day circle */
     .day-number.current-day {
-        background-color: #4f46e5;
+        background-color: #e5b846;
         color: #ffffff;
         border-radius: 9999px; /* full circle */
     }
@@ -172,25 +172,16 @@
     }
   </style>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0PNGCZM9Z"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-V0PNGCZM9Z');
-    </script>
 </head>
 <body class="bg-gray-100 text-gray-800 p-6 sm:p-8 flex flex-col items-center min-h-screen">
 
     <div class="max-w-7xl w-full mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-gray-200">
-        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 space-y-4 md:space-y-0">
+        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 space-y-4 md:space-y-0 relative">
             <div class="flex items-center space-x-4">
                 <h1 class="text-3xl sm:text-4xl font-bold text-gray-800">Habit Tracker</h1>
             </div>
 
-            <div class="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 w-full md:w-auto">
+            <div id="settingsMenu" class="md:flex md:items-center space-y-4 md:space-y-0 md:space-x-4 w-full md:w-auto mt-4 md:mt-0 flex-col md:flex-row hidden absolute md:static top-14 right-0 bg-white md:bg-transparent p-4 md:p-0 rounded-lg shadow-lg md:shadow-none border border-gray-200 md:border-none z-20">
                 <div class="flex space-x-2 w-full sm:w-auto">
                     <select id="monthSelect" class="flex-1 bg-white text-gray-700 p-2 sm:p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors cursor-pointer">
                         <option value="January">January</option>
@@ -208,7 +199,7 @@
                     </select>
                     <select id="yearSelect" class="flex-1 bg-white text-gray-700 p-2 sm:p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors cursor-pointer"></select>
                 </div>
-
+                
                 <div class="flex flex-wrap gap-2 w-full md:w-auto">
                     <button id="darkModeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
                         <svg id="sunIcon" class="w-6 h-6 text-yellow-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -227,6 +218,12 @@
                     </button>
                 </div>
             </div>
+
+            <button id="settingsToggleBtn" class="md:hidden p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 absolute top-0 right-0">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
         </div>
 
         <div class="overflow-x-auto pb-4 custom-scrollbar">
@@ -286,6 +283,10 @@
     const darkModeToggle = document.getElementById('darkModeToggle');
     const moonIcon = document.getElementById('moonIcon');
     const sunIcon = document.getElementById('sunIcon');
+
+    // New variables for the settings menu
+    const settingsToggleBtn = document.getElementById('settingsToggleBtn');
+    const settingsMenu = document.getElementById('settingsMenu');
 
     // --- Dark Mode Functions ---
     function toggleDarkMode() {
@@ -350,7 +351,12 @@
     importDataBtn.addEventListener('click', () => importFileInput.click());
     importFileInput.addEventListener('change', importData);
     darkModeToggle.addEventListener('click', toggleDarkMode);
-
+    
+    // New: Event listener for the settings button
+    settingsToggleBtn.addEventListener('click', () => {
+        settingsMenu.classList.toggle('hidden');
+        settingsMenu.classList.toggle('flex');
+    });
 
     // --- Persistent State Functions ---
     function getStorageKey() {
