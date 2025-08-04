@@ -176,7 +176,8 @@
 <body class="bg-gray-100 text-gray-800 p-6 sm:p-8 flex flex-col items-center min-h-screen">
 
     <div class="max-w-7xl w-full mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-gray-200">
-        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 space-y-4 md:space-y-0 relative">
+        <div class="flex items-center justify-between mb-6 relative md:space-y-0">
+            
             <div class="flex items-center space-x-4">
                 <h1 class="text-3xl sm:text-4xl font-bold text-gray-800">Habit Tracker</h1>
             </div>
@@ -353,9 +354,17 @@
     darkModeToggle.addEventListener('click', toggleDarkMode);
     
     // New: Event listener for the settings button
-    settingsToggleBtn.addEventListener('click', () => {
-        settingsMenu.classList.toggle('hidden');
-        settingsMenu.classList.toggle('flex');
+    settingsToggleBtn.addEventListener('click', (event) => {
+      settingsMenu.classList.toggle('hidden');
+      // Prevent the click from propagating to the window listener
+      event.stopPropagation();
+    });
+    
+    // New: Event listener to close the menu when clicking outside of it
+    window.addEventListener('click', (event) => {
+      if (!settingsMenu.contains(event.target) && !settingsToggleBtn.contains(event.target)) {
+        settingsMenu.classList.add('hidden');
+      }
     });
 
     // --- Persistent State Functions ---
