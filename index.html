@@ -8,170 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f9fafb;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    [data-mode="dark"] body {
-      background-color: #1a1a2e;
-      color: #e0e0e0;
-    }
-
-    [data-mode="dark"] .bg-white {
-        background-color: #2c2c44;
-        color: #e0e0e0;
-    }
-
-    [data-mode="dark"] .border-gray-200 {
-        border-color: #444466;
-    }
-
-    [data-mode="dark"] .text-gray-800 {
-        color: #e0e0e0;
-    }
-
-    [data-mode="dark"] .text-gray-700 {
-        color: #c0c0d0;
-    }
-
-    [data-mode="dark"] .text-gray-500 {
-        color: #9999b0;
-    }
-
-    [data-mode="dark"] select, [data-mode="dark"] input {
-        background-color: #38385a;
-        border-color: #444466;
-        color: #e0e0e0;
-    }
-
-    [data-mode="dark"] select:focus, [data-mode="dark"] input:focus {
-        border-color: #6a6ad3;
-        ring-color: #6a6ad3;
-    }
-
-    [data-mode="dark"] .day-number {
-      color: #9999b0;
-    }
-
-    /* This is the key change: specify that only the empty squares should have the dark mode background */
-    [data-mode="dark"] .day-square.bg-gray-200 {
-      background-color: #38385a;
-    }
-
-    /* Corrected styling for export/import buttons in dark mode */
-    [data-mode="dark"] #exportDataBtn,
-    [data-mode="dark"] #importDataBtn {
-        background-color: #38385a;
-        color: #e0e0e0;
-    }
-
-    [data-mode="dark"] #exportDataBtn:hover,
-    [data-mode="dark"] #importDataBtn:hover {
-        background-color: #4a4a70;
-    }
-
-    [data-mode="dark"] .text-gray-400 {
-        color: #6a6a8c;
-    }
-
-    [data-mode="dark"] .modal-content {
-        background-color: #2c2c44;
-        border-color: #444466;
-    }
-
-    [data-mode="dark"] .custom-scrollbar::-webkit-scrollbar-thumb {
-        background-color: #4a4a70;
-    }
-
-    .tracker-grid {
-      display: grid;
-      grid-template-columns: minmax(140px, 1fr) repeat(31, 1.9rem);
-      gap: 0.1rem;
-    }
-    .day-square, .day-number {
-      width: 1.9rem;
-      height: 1.9rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 0.5rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.3s ease;
-    }
-    .day-square {
-      cursor: pointer;
-      background-color: #e5e7eb;
-    }
-    .day-square:hover {
-      transform: scale(1.07);
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-    }
-    .day-number {
-      font-size: 0.65rem;
-      color: #9ca3af;
-    }
-
-    /* Added styling for the current day circle */
-    .day-number.current-day {
-        background-color: #e5b846;
-        color: #ffffff;
-        border-radius: 9999px; /* full circle */
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 50;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(6px);
-      justify-content: center;
-      align-items: center;
-      animation: fadeIn 0.3s ease-out;
-    }
-    .modal-content {
-      transform: translateY(20px);
-      animation: slideIn 0.3s ease-out forwards;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes slideIn {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    /* Custom Scrollbar for better UX on overflow */
-    .custom-scrollbar::-webkit-scrollbar {
-        height: 8px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 10px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #d4d4d4;
-        border-radius: 10px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #b0b0b0;
-    }
-    [data-mode="dark"] .custom-scrollbar::-webkit-scrollbar-track {
-        background: #2c2c44;
-    }
-    [data-mode="dark"] .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #4a4a70;
-    }
-    [data-mode="dark"] .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #6a6a8c;
-    }
-  </style>
-
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-gray-100 text-gray-800 p-6 sm:p-8 flex flex-col items-center min-h-screen">
 
@@ -182,9 +19,9 @@
                 <h1 class="text-3xl sm:text-4xl font-bold text-gray-800">Habit Tracker</h1>
             </div>
 
-            <div id="settingsMenu" class="md:flex md:items-center space-y-4 md:space-y-0 md:space-x-4 w-full md:w-auto mt-4 md:mt-0 flex-col md:flex-row hidden absolute md:static top-14 right-0 bg-white md:bg-transparent p-4 md:p-0 rounded-lg shadow-lg md:shadow-none border border-gray-200 md:border-none z-20">
-                <div class="flex space-x-2 w-full sm:w-auto">
-                    <select id="monthSelect" class="flex-1 bg-white text-gray-700 p-2 sm:p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors cursor-pointer">
+            <div class="flex items-center space-x-4">
+                <div class="flex space-x-2">
+                    <select id="monthSelect" class="bg-white text-gray-700 p-2 sm:p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors cursor-pointer">
                         <option value="January">January</option>
                         <option value="February">February</option>
                         <option value="March">March</option>
@@ -198,417 +35,68 @@
                         <option value="November">November</option>
                         <option value="December">December</option>
                     </select>
-                    <select id="yearSelect" class="flex-1 bg-white text-gray-700 p-2 sm:p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors cursor-pointer"></select>
+                    <select id="yearSelect" class="bg-white text-gray-700 p-2 sm:p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors cursor-pointer"></select>
                 </div>
-                
-                <div class="flex flex-wrap gap-2 w-full md:w-auto">
-                    <button id="darkModeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
-                        <svg id="sunIcon" class="w-6 h-6 text-yellow-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                        </svg>
-                        <svg id="moonIcon" class="w-6 h-6 text-gray-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                <div class="relative">
+                    <button id="settingsToggleBtn" class="p-2 rounded-full hover:bg-gray-200 transition-colors duration-200">
+                        <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
                     </button>
-                    <button id="exportDataBtn" class="bg-gray-200 text-gray-700 p-3 rounded-lg hover:bg-gray-300 transition-colors duration-200 text-sm">Export</button>
-                    <button id="importDataBtn" class="bg-gray-200 text-gray-700 p-3 rounded-lg hover:bg-gray-300 transition-colors duration-200 text-sm">Import</button>
-                    <input type="file" id="importFileInput" accept=".csv" class="hidden">
-                    <button id="resetAllBtn" class="bg-red-400 text-white p-3 rounded-lg hover:bg-red-600 transition-colors duration-200 text-sm font-semibold">Reset Month</button>
-                    <button id="showAddHabitBtn" class="bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700 transition-colors duration-200 text-sm font-semibold">
-                        <span class="inline-block mr-1">+</span> Add Habit
-                    </button>
+                    <div id="settingsMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-xl z-20">
+                        <div class="py-2 px-4">
+                            <button id="darkModeToggle" class="w-full text-left py-2 px-4 rounded-lg hover:bg-gray-100 transition-colors duration-200 flex items-center space-x-2">
+                                <svg id="sunIcon" class="w-6 h-6 text-yellow-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                </svg>
+                                <svg id="moonIcon" class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                                </svg>
+                                <span>Dark Mode</span>
+                            </button>
+                            <button id="exportDataBtn" class="w-full text-left py-2 px-4 rounded-lg hover:bg-gray-100 transition-colors duration-200">Export</button>
+                            <button id="importDataBtn" class="w-full text-left py-2 px-4 rounded-lg hover:bg-gray-100 transition-colors duration-200">Import</button>
+                            <input type="file" id="importFileInput" accept=".csv" class="hidden">
+                            <button id="resetAllBtn" class="w-full text-left py-2 px-4 rounded-lg text-red-500 hover:bg-red-50 transition-colors duration-200 font-semibold">Reset Month</button>
+                            <button id="showAddHabitBtn" class="w-full text-left py-2 px-4 rounded-lg text-indigo-600 hover:bg-indigo-50 transition-colors duration-200 font-semibold">
+                                <span class="inline-block mr-1">+</span> Add Habit
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <button id="settingsToggleBtn" class="md:hidden p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 absolute top-0 right-0">
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
         </div>
 
         <div class="overflow-x-auto pb-4 custom-scrollbar">
-        <div id="trackerHeader" class="tracker-grid mb-2 border-b border-gray-200 pb-2 sticky top-0 bg-white z-10 shadow-sm">
+            <div id="trackerHeader" class="tracker-grid mb-2 border-b border-gray-200 pb-2 sticky top-0 bg-white z-10 shadow-sm">
                 <div class="flex items-center">
                     <span class="text-sm font-semibold text-gray-500">Habit Name</span>
                 </div>
             </div>
-
             <div id="habitsList" class="space-y-4"></div>
         </div>
     </div>
 
-<div id="addHabitModal" class="modal">
+<div id="habitModal" class="modal">
     <div class="modal-content bg-white p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-md mx-4 border border-gray-200 relative transition-transform duration-300">
         <div class="flex justify-between items-center mb-6">
-            <h3 class="text-2xl font-bold text-gray-900">Create New Habit</h3>
+            <h3 id="modalTitle" class="text-2xl font-bold text-gray-900">Create New Habit</h3>
             <button id="closeModalBtn" class="text-gray-400 hover:text-gray-600 text-3xl leading-none font-light absolute top-4 right-4" aria-label="Close modal">
                 &times;
             </button>
         </div>
         <input type="text" id="habitInput" placeholder="Enter habit name..." class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-4 transition-colors">
 
-        <div class="flex items-center space-x-3 mb-6">
-            <label for="colorSelect" class="text-gray-700 font-medium">Color:</label>
-            <select id="colorSelect" class="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors cursor-pointer">
-                <option value="bg-green-500">Green</option>
-                <option value="bg-blue-500">Blue</option>
-                <option value="bg-yellow-500">Yellow</option>
-                <option value="bg-red-500">Red</option>
-                <option value="bg-purple-500">Purple</option>
-                <option value="bg-pink-500">Pink</option>
-                <option value="bg-indigo-500">Indigo</option>
-            </select>
+        <div class="mb-6">
+            <label class="text-gray-700 font-medium block mb-2">Color:</label>
+            <div id="colorPalette" class="flex flex-wrap gap-2">
+                </div>
         </div>
 
-        <button id="addHabitBtnModal" class="w-full bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700 transition-colors duration-200 font-semibold text-lg">Add Habit</button>
-        </button>
+        <button id="saveHabitBtn" class="w-full bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700 transition-colors duration-200 font-semibold text-lg">Add Habit</button>
     </div>
 </div>
-
-<script>
-    const showAddHabitBtn = document.getElementById('showAddHabitBtn');
-    const addHabitModal = document.getElementById('addHabitModal');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const habitInput = document.getElementById('habitInput');
-    const addHabitBtnModal = document.getElementById('addHabitBtnModal');
-    const habitsList = document.getElementById('habitsList');
-    const trackerHeader = document.getElementById('trackerHeader');
-    const monthSelect = document.getElementById('monthSelect');
-    const yearSelect = document.getElementById('yearSelect');
-    const colorSelect = document.getElementById('colorSelect');
-    const resetAllBtn = document.getElementById('resetAllBtn');
-    const exportDataBtn = document.getElementById('exportDataBtn');
-    const importDataBtn = document.getElementById('importDataBtn');
-    const importFileInput = document.getElementById('importFileInput');
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    const moonIcon = document.getElementById('moonIcon');
-    const sunIcon = document.getElementById('sunIcon');
-
-    // New variables for the settings menu
-    const settingsToggleBtn = document.getElementById('settingsToggleBtn');
-    const settingsMenu = document.getElementById('settingsMenu');
-
-    // --- Dark Mode Functions ---
-    function toggleDarkMode() {
-        const html = document.documentElement;
-        if (html.getAttribute('data-mode') === 'dark') {
-            html.removeAttribute('data-mode');
-            localStorage.setItem('theme', 'light');
-            moonIcon.classList.remove('hidden');
-            sunIcon.classList.add('hidden');
-        } else {
-            html.setAttribute('data-mode', 'dark');
-            localStorage.setItem('theme', 'dark');
-            moonIcon.classList.add('hidden');
-            sunIcon.classList.remove('hidden');
-        }
-    }
-
-    function applySavedTheme() {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            document.documentElement.setAttribute('data-mode', 'dark');
-            moonIcon.classList.add('hidden');
-            sunIcon.classList.remove('hidden');
-        } else {
-            document.documentElement.removeAttribute('data-mode');
-            moonIcon.classList.remove('hidden');
-            sunIcon.classList.add('hidden');
-        }
-    }
-
-    // Event listeners for the modal
-    showAddHabitBtn.addEventListener('click', () => {
-        addHabitModal.style.display = 'flex';
-        habitInput.focus();
-    });
-    closeModalBtn.addEventListener('click', () => {
-        addHabitModal.style.display = 'none';
-    });
-    window.addEventListener('click', (event) => {
-        if (event.target == addHabitModal) {
-            addHabitModal.style.display = 'none';
-        }
-    });
-    addHabitBtnModal.addEventListener('click', addHabit);
-    habitInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            addHabit();
-        }
-    });
-
-    // Event listeners for month and year dropdowns
-    monthSelect.addEventListener('change', () => {
-        renderCalendar();
-        loadState();
-    });
-    yearSelect.addEventListener('change', () => {
-        renderCalendar();
-        loadState();
-    });
-    resetAllBtn.addEventListener('click', resetAllData);
-    exportDataBtn.addEventListener('click', exportData);
-    importDataBtn.addEventListener('click', () => importFileInput.click());
-    importFileInput.addEventListener('change', importData);
-    darkModeToggle.addEventListener('click', toggleDarkMode);
-    
-    // New: Event listener for the settings button
-    settingsToggleBtn.addEventListener('click', (event) => {
-      settingsMenu.classList.toggle('hidden');
-      // Prevent the click from propagating to the window listener
-      event.stopPropagation();
-    });
-    
-    // New: Event listener to close the menu when clicking outside of it
-    window.addEventListener('click', (event) => {
-      if (!settingsMenu.contains(event.target) && !settingsToggleBtn.contains(event.target)) {
-        settingsMenu.classList.add('hidden');
-      }
-    });
-
-    // --- Persistent State Functions ---
-    function getStorageKey() {
-        return `trackerState-${monthSelect.value}-${yearSelect.value}`;
-    }
-
-    function saveState() {
-        const habits = [];
-        habitsList.querySelectorAll('.tracker-grid').forEach(habitElement => {
-            const habitName = habitElement.querySelector('p').textContent;
-            const defaultColor = habitElement.dataset.defaultColor;
-            const days = [];
-            habitElement.querySelectorAll('.day-square').forEach(square => {
-                const colorClass = Array.from(square.classList).find(cls => cls.startsWith('bg-'));
-                days.push(colorClass);
-            });
-            habits.push({ name: habitName, defaultColor, days });
-        });
-        localStorage.setItem(getStorageKey(), JSON.stringify(habits));
-    }
-
-    function loadState() {
-        const savedState = localStorage.getItem(getStorageKey());
-
-        // Clear existing habits
-        habitsList.innerHTML = '';
-
-        const daysInMonth = new Date(yearSelect.value, monthSelect.selectedIndex + 1, 0).getDate();
-
-        if (savedState) {
-            const habits = JSON.parse(savedState);
-            habits.forEach(habitData => {
-                // Adjust habit data if the number of days has changed since it was saved
-                if (habitData.days.length !== daysInMonth) {
-                    habitData.days.length = daysInMonth; // Truncate or extend the array
-                    habitData.days.fill('bg-gray-200', habitData.days.length); // Fill new days
-                }
-                createHabitRow(habitData.name, habitData.defaultColor, habitData.days);
-            });
-        }
-    }
-
-    function createHabitRow(name, defaultColor, days) {
-        const habitElement = document.createElement('div');
-        habitElement.classList.add('tracker-grid');
-        habitElement.dataset.defaultColor = defaultColor;
-
-        const habitNameDiv = document.createElement('div');
-        habitNameDiv.classList.add('flex', 'items-center', 'space-x-2');
-
-        const removeBtn = document.createElement('button');
-        removeBtn.classList.add('text-gray-400', 'hover:text-red-500', 'font-bold', 'text-xl', 'p-1', 'leading-none', 'transition-colors');
-        removeBtn.innerHTML = '&times;';
-        removeBtn.addEventListener('click', (event) => {
-            if (window.confirm('Are you sure you want to remove this habit?')) {
-                habitElement.remove();
-                saveState();
-            }
-        });
-        habitNameDiv.appendChild(removeBtn);
-
-        const habitNameParagraph = document.createElement('p');
-        habitNameParagraph.classList.add('text-base', 'font-semibold', 'text-gray-700');
-        habitNameParagraph.textContent = name;
-        habitNameDiv.appendChild(habitNameParagraph);
-
-        habitElement.appendChild(habitNameDiv);
-
-        const daysInMonth = new Date(yearSelect.value, monthSelect.selectedIndex + 1, 0).getDate();
-
-        for (let i = 0; i < daysInMonth; i++) {
-            const daySquare = document.createElement('div');
-            daySquare.classList.add('day-square', days[i] || 'bg-gray-200');
-            daySquare.dataset.day = i + 1;
-            daySquare.addEventListener('click', toggleColor);
-            habitElement.appendChild(daySquare);
-        }
-        habitsList.appendChild(habitElement);
-    }
-
-    // --- Other Functions ---
-    function resetAllData() {
-        if (window.confirm('Are you sure you want to delete all habits for this month? This cannot be undone.')) {
-            localStorage.removeItem(getStorageKey());
-            loadState();
-        }
-    }
-
-    function populateYears() {
-        const currentYear = new Date().getFullYear();
-        for (let i = currentYear - 5; i <= currentYear + 5; i++) {
-            const option = document.createElement('option');
-            option.value = i;
-            option.textContent = i;
-            yearSelect.appendChild(option);
-        }
-        yearSelect.value = currentYear;
-    }
-
-    function renderCalendar() {
-        // Clear previous day numbers and update grid columns
-        trackerHeader.querySelectorAll('.day-number').forEach(e => e.remove());
-        habitsList.querySelectorAll('.tracker-grid').forEach(e => e.remove());
-
-        const selectedYear = parseInt(yearSelect.value);
-        const selectedMonthIndex = monthSelect.selectedIndex;
-        const daysInMonth = new Date(selectedYear, selectedMonthIndex + 1, 0).getDate();
-        const currentDate = new Date();
-        const currentDay = currentDate.getDate();
-        const currentMonth = currentDate.getMonth();
-        const currentYear = currentDate.getFullYear();
-
-        // Update the grid template columns to be dynamic
-        trackerHeader.style.gridTemplateColumns = `minmax(140px, 1fr) repeat(${daysInMonth}, 1.9rem)`;
-        habitsList.querySelectorAll('.tracker-grid').forEach(grid => {
-            grid.style.gridTemplateColumns = `minmax(140px, 1fr) repeat(${daysInMonth}, 1.9rem)`;
-        });
-
-        for (let i = 1; i <= daysInMonth; i++) {
-            const dayNumberDiv = document.createElement('div');
-            dayNumberDiv.classList.add('day-number');
-            dayNumberDiv.textContent = i;
-            
-            // Mark the current day with a circle
-            if (i === currentDay && selectedMonthIndex === currentMonth && selectedYear === currentYear) {
-                dayNumberDiv.classList.add('current-day');
-            }
-
-            trackerHeader.appendChild(dayNumberDiv);
-        }
-        loadState();
-    }
-
-    function addHabit() {
-        const habitName = habitInput.value.trim();
-        if (habitName === '') {
-            alert('Please enter a habit.');
-            return;
-        }
-
-        const selectedColor = colorSelect.value;
-        const daysInMonth = new Date(yearSelect.value, monthSelect.selectedIndex + 1, 0).getDate();
-        const days = Array(daysInMonth).fill('bg-gray-200');
-        createHabitRow(habitName, selectedColor, days);
-
-        habitInput.value = '';
-        addHabitModal.style.display = 'none';
-        saveState();
-    }
-
-    function toggleColor(event) {
-        const square = event.target;
-        const habitRow = square.closest('.tracker-grid');
-        const defaultColor = habitRow.dataset.defaultColor;
-
-        if (square.classList.contains('bg-gray-200')) {
-            square.classList.remove('bg-gray-200');
-            square.classList.add(defaultColor);
-        } else {
-            square.classList.remove(defaultColor);
-            square.classList.add('bg-gray-200');
-        }
-        saveState();
-    }
-
-    // --- Export/Import Functions ---
-    function exportData() {
-        const savedState = localStorage.getItem(getStorageKey());
-        if (!savedState || JSON.parse(savedState).length === 0) {
-            alert('No data to export for this month.');
-            return;
-        }
-
-        const habits = JSON.parse(savedState);
-        const daysInMonth = new Date(yearSelect.value, monthSelect.selectedIndex + 1, 0).getDate();
-        const daysHeader = Array.from({ length: daysInMonth }, (_, i) => `Day_${i + 1}`).join(',');
-        const csvHeader = `Habit_Name,Default_Color,${daysHeader}\n`;
-
-        const csvRows = habits.map(habit => {
-            const dayData = habit.days.map(day => day).join(',');
-            return `"${habit.name.replace(/"/g, '""')}","${habit.defaultColor}",${dayData}`;
-        });
-
-        const csvContent = csvHeader + csvRows.join('\n');
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `habit_tracker_data_${monthSelect.value}-${yearSelect.value}.csv`;
-        a.click();
-        URL.revokeObjectURL(url);
-    }
-
-    function importData(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-
-        if (habitsList.childElementCount > 0 && !window.confirm('Importing data will overwrite all habits for the current month. Are you sure?')) {
-            event.target.value = '';
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            try {
-                const csvContent = e.target.result;
-                const rows = csvContent.trim().split('\n');
-                const importedHabits = [];
-
-                for (let i = 1; i < rows.length; i++) {
-                    const row = rows[i].split(',');
-                    const name = row[0].replace(/"/g, '');
-                    const defaultColor = row[1].replace(/"/g, '');
-                    const days = row.slice(2);
-
-                    if (name && defaultColor) {
-                        importedHabits.push({ name, defaultColor, days });
-                    }
-                }
-
-                if (importedHabits.length > 0) {
-                    localStorage.setItem(getStorageKey(), JSON.stringify(importedHabits));
-                    renderCalendar();
-                } else {
-                    alert('No valid habit data found in the CSV file.');
-                }
-            } catch (error) {
-                alert('Failed to parse the CSV file. Please check the file format.');
-                console.error('Import error:', error);
-            }
-            event.target.value = '';
-        };
-        reader.readAsText(file);
-    }
-
-    // Initialize on page load
-    applySavedTheme();
-    populateYears();
-    const currentDate = new Date();
-    monthSelect.value = currentDate.toLocaleString('default', { month: 'long' });
-    yearSelect.value = currentDate.getFullYear();
-    renderCalendar();
-</script>
+<script src="script.js"></script>
 </body>
 </html>
