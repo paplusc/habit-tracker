@@ -1,4 +1,4 @@
-    const showAddHabitBtn = document.getElementById('showAddHabitBtn');
+        const showAddHabitBtn = document.getElementById('showAddHabitBtn');
     const habitModal = document.getElementById('habitModal');
     const closeModalBtn = document.getElementById('closeModalBtn');
     const modalTitle = document.getElementById('modalTitle');
@@ -16,6 +16,8 @@
     const darkModeToggle = document.getElementById('darkModeToggle');
     const moonIcon = document.getElementById('moonIcon');
     const sunIcon = document.getElementById('sunIcon');
+    // New variable for the copy button
+    const copyPreviousMonthBtn = document.getElementById('copyPreviousMonthBtn');
 
     // New variables for the settings menu
     const settingsToggleBtn = document.getElementById('settingsToggleBtn');
@@ -109,6 +111,8 @@
     importDataBtn.addEventListener('click', () => importFileInput.click());
     importFileInput.addEventListener('change', importData);
     darkModeToggle.addEventListener('click', toggleDarkMode);
+    // New Event Listener for the copy button
+    copyPreviousMonthBtn.addEventListener('click', copyHabitsFromPreviousMonth);
     
     // New: Event listener for the settings button
     settingsToggleBtn.addEventListener('click', (event) => {
@@ -127,6 +131,24 @@
     // --- Persistent State Functions ---
     function getStorageKey() {
         return `trackerState-${monthSelect.value}-${yearSelect.value}`;
+    }
+    
+    // New helper function to get previous month's storage key
+    function getPreviousMonthKey() {
+        const currentMonthIndex = monthSelect.selectedIndex;
+        const currentYear = parseInt(yearSelect.value);
+        let prevMonthIndex, prevYear;
+
+        if (currentMonthIndex === 0) { // January
+            prevMonthIndex = 11; // December
+            prevYear = currentYear - 1;
+        } else {
+            prevMonthIndex = currentMonthIndex - 1;
+            prevYear = currentYear;
+        }
+
+        const prevMonthName = monthSelect.options[prevMonthIndex].value;
+        return `trackerState-${prevMonthName}-${prevYear}`;
     }
 
     function saveState() {
@@ -370,6 +392,40 @@ function createHabitRow(name, defaultColor, days) {
             loadState();
         }
     }
+    
+    // New Function to copy habits from the previous month
+    function copyHabitsFromPreviousMonth() {
+        const previousMonthKey = getPreviousMonthKey();
+        const previousMonthData = localStorage.getItem(previousMonthKey);
+        
+        if (!previousMonthData) {
+            alert('No habits found for the previous month.');
+            return;
+        }
+        
+        if (habitsList.childElementCount > 0 && !window.confirm('Copying habits will overwrite all habits for the current month. Are you sure?')) {
+            return;
+        }
+
+        const previousHabits = JSON.parse(previousMonthData);
+        
+        const daysInMonth = new Date(yearSelect.value, monthSelect.selectedIndex + 1, 0).getDate();
+
+        // Create a new array with only the habit names and colors, resetting the days
+        const newHabits = previousHabits.map(habit => {
+            const emptyDays = Array(daysInMonth).fill('bg-gray-200');
+            return {
+                name: habit.name,
+                defaultColor: habit.defaultColor,
+                days: emptyDays
+            };
+        });
+
+        localStorage.setItem(getStorageKey(), JSON.stringify(newHabits));
+        loadState();
+        settingsMenu.classList.add('hidden'); // Close the menu after the action
+    }
+
 
     function populateYears() {
         const currentYear = new Date().getFullYear();
