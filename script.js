@@ -1,4 +1,3 @@
-
     const showAddHabitBtn = document.getElementById('showAddHabitBtn');
     const habitModal = document.getElementById('habitModal');
     const closeModalBtn = document.getElementById('closeModalBtn');
@@ -165,97 +164,109 @@
             });
         }
     }
+    
+function createHabitRow(name, defaultColor, days) {
+    const habitElement = document.createElement('div');
+    habitElement.classList.add('tracker-grid');
+    habitElement.dataset.defaultColor = defaultColor;
 
-    function createHabitRow(name, defaultColor, days) {
-        const habitElement = document.createElement('div');
-        habitElement.classList.add('tracker-grid');
-        habitElement.dataset.defaultColor = defaultColor;
+    const habitNameDiv = document.createElement('div');
+    // Change: Use flexbox to align items and space them out
+    habitNameDiv.classList.add('flex', 'items-center', 'justify-between', 'relative'); 
 
-        const habitNameDiv = document.createElement('div');
-        habitNameDiv.classList.add('flex', 'items-center', 'space-x-2', 'relative'); // Added relative for the menu position
+    // New: Container for the buttons on the right
+    const controlButtonsContainer = document.createElement('div');
+    controlButtonsContainer.classList.add('flex', 'items-center', 'space-x-1');
 
-        // New: Pop-up menu button
-        const menuBtn = document.createElement('button');
-        menuBtn.classList.add('text-gray-400', 'hover:text-gray-600', 'p-1', 'transition-colors', 'w-5', 'h-5');
-        menuBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-full h-full">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
-        </svg>`;
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevents the window click listener from immediately closing the menu
-            // Close other menus
-            document.querySelectorAll('.habit-menu').forEach(menu => {
-                if (menu !== habitElement.querySelector('.habit-menu')) {
-                    menu.classList.add('hidden');
-                }
-            });
-            habitElement.querySelector('.habit-menu').classList.toggle('hidden');
-        });
-        habitNameDiv.appendChild(menuBtn);
-
-        // New: Pop-up menu
-        const menu = document.createElement('div');
-        menu.classList.add('habit-menu', 'absolute', 'left-10', 'top-full', 'mt-1', 'bg-white', 'dark:bg-gray-700', 'rounded-lg', 'shadow-lg', 'border', 'border-gray-200', 'dark:border-gray-600', 'py-1', 'z-30', 'hidden');
-
-        // Edit button inside the menu
-        const editBtn = document.createElement('button');
-        editBtn.classList.add('flex', 'items-center', 'w-full', 'px-4', 'py-2', 'text-sm', 'text-gray-700', 'dark:text-white', 'hover:bg-gray-100', 'dark:hover:bg-gray-600', 'transition-colors');
-        editBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-        </svg> Edit`;
-        editBtn.addEventListener('click', () => showEditModal(habitElement));
-        menu.appendChild(editBtn);
-
-        // Remove button inside the menu
-        const removeBtn = document.createElement('button');
-        removeBtn.classList.add('flex', 'items-center', 'w-full', 'px-4', 'py-2', 'text-sm', 'text-red-500', 'hover:bg-gray-100', 'dark:hover:bg-gray-600', 'transition-colors');
-        removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m-1.022.165L5.674 19.673a2.25 2.25 0 002.244 2.077h6.812a2.25 2.25 0 002.244-2.077L19.563 5.79m-4.075 0V4.625c0-1.243-1.007-2.25-2.25-2.25h-2.5c-1.243 0-2.25 1.007-2.25 2.25v1.165m1.5 0h-3.75" />
-        </svg> Remove`;
-        removeBtn.addEventListener('click', (event) => {
-            if (window.confirm('Are you sure you want to remove this habit?')) {
-                habitElement.remove();
-                saveState();
+    // New: Pop-up menu button
+    const menuBtn = document.createElement('button');
+    menuBtn.classList.add('text-gray-400', 'hover:text-gray-600', 'p-1', 'transition-colors', 'w-5', 'h-5');
+    menuBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-full h-full">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+    </svg>`;
+    menuBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); 
+        document.querySelectorAll('.habit-menu').forEach(menu => {
+            if (menu !== habitElement.querySelector('.habit-menu')) {
+                menu.classList.add('hidden');
             }
         });
-        menu.appendChild(removeBtn);
-        habitNameDiv.appendChild(menu);
+        habitElement.querySelector('.habit-menu').classList.toggle('hidden');
+    });
+    // Append the menu button to the new container
+    controlButtonsContainer.appendChild(menuBtn);
 
-        const habitNameParagraph = document.createElement('p');
-        habitNameParagraph.classList.add('habit-name', 'text-base', 'font-semibold', 'text-gray-700', 'truncate', 'max-w-[80px]'); // Added truncate to prevent overflow
-        habitNameParagraph.textContent = name;
-        habitNameDiv.appendChild(habitNameParagraph);
+    // New: Pop-up menu (this remains unchanged, but its position is relative to its parent)
+    const menu = document.createElement('div');
+    menu.classList.add('habit-menu', 'absolute', 'right-10', 'top-full', 'mt-1', 'bg-white', 'dark:bg-gray-700', 'rounded-lg', 'shadow-lg', 'border', 'border-gray-200', 'dark:border-gray-600', 'py-1', 'z-30', 'hidden');
 
-        // New: Move Up Button
-        const moveUpBtn = document.createElement('button');
-        moveUpBtn.classList.add('text-gray-400', 'hover:text-gray-600', 'p-1', 'transition-colors', 'w-5', 'h-5');
-        moveUpBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-full h-full">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-        </svg>`;
-        moveUpBtn.addEventListener('click', () => moveHabitRow(habitElement, -1));
-        habitNameDiv.appendChild(moveUpBtn);
+    // Edit button inside the menu (remains unchanged)
+    const editBtn = document.createElement('button');
+    editBtn.classList.add('flex', 'items-center', 'w-full', 'px-4', 'py-2', 'text-sm', 'text-gray-700', 'dark:text-white', 'hover:bg-gray-100', 'dark:hover:bg-gray-600', 'transition-colors');
+    editBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+    </svg> Edit`;
+    editBtn.addEventListener('click', () => showEditModal(habitElement));
+    menu.appendChild(editBtn);
 
-        // New: Move Down Button
-        const moveDownBtn = document.createElement('button');
-        moveDownBtn.classList.add('text-gray-400', 'hover:text-gray-600', 'p-1', 'transition-colors', 'w-5', 'h-5');
-        moveDownBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-full h-full">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-        </svg>`;
-        moveDownBtn.addEventListener('click', () => moveHabitRow(habitElement, 1));
-        habitNameDiv.appendChild(moveDownBtn);
-        
-        habitElement.appendChild(habitNameDiv);
-
-        const daysInMonth = new Date(yearSelect.value, monthSelect.selectedIndex + 1, 0).getDate();
-
-        for (let i = 0; i < daysInMonth; i++) {
-            const daySquare = document.createElement('div');
-            daySquare.classList.add('day-square', days[i] || 'bg-gray-200');
-            daySquare.dataset.day = i + 1;
-            daySquare.addEventListener('click', toggleColor);
-            habitElement.appendChild(daySquare);
+    // Remove button inside the menu (remains unchanged)
+    const removeBtn = document.createElement('button');
+    removeBtn.classList.add('flex', 'items-center', 'w-full', 'px-4', 'py-2', 'text-sm', 'text-red-500', 'hover:bg-gray-100', 'dark:hover:bg-gray-600', 'transition-colors');
+    removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m-1.022.165L5.674 19.673a2.25 2.25 0 002.244 2.077h6.812a2.25 2.25 0 002.244-2.077L19.563 5.79m-4.075 0V4.625c0-1.243-1.007-2.25-2.25-2.25h-2.5c-1.243 0-2.25 1.007-2.25 2.25v1.165m1.5 0h-3.75" />
+    </svg> Remove`;
+    removeBtn.addEventListener('click', (event) => {
+        if (window.confirm('Are you sure you want to remove this habit?')) {
+            habitElement.remove();
+            saveState();
         }
-        habitsList.appendChild(habitElement);
+    });
+    menu.appendChild(removeBtn);
+    
+    // Append the menu to the control buttons container, as it is a pop-up and its position is relative to its parent
+    controlButtonsContainer.appendChild(menu);
+
+    // Habits name container on the left
+    const habitNameParagraph = document.createElement('p');
+    habitNameParagraph.classList.add('habit-name', 'text-base', 'font-semibold', 'text-gray-700', 'truncate'); 
+    habitNameParagraph.textContent = name;
+    
+    // New: Move Up Button (added to the controlButtonsContainer)
+    const moveUpBtn = document.createElement('button');
+    moveUpBtn.classList.add('text-gray-400', 'hover:text-gray-600', 'p-1', 'transition-colors', 'w-5', 'h-5');
+    moveUpBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-full h-full">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+    </svg>`;
+    moveUpBtn.addEventListener('click', () => moveHabitRow(habitElement, -1));
+    controlButtonsContainer.appendChild(moveUpBtn);
+
+    // New: Move Down Button (added to the controlButtonsContainer)
+    const moveDownBtn = document.createElement('button');
+    moveDownBtn.classList.add('text-gray-400', 'hover:text-gray-600', 'p-1', 'transition-colors', 'w-5', 'h-5');
+    moveDownBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-full h-full">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+    </svg>`;
+    moveDownBtn.addEventListener('click', () => moveHabitRow(habitElement, 1));
+    controlButtonsContainer.appendChild(moveDownBtn);
+    
+    // Append the habit name and the new button container to the habitNameDiv
+    habitNameDiv.appendChild(habitNameParagraph);
+    habitNameDiv.appendChild(controlButtonsContainer);
+    
+    // Append the final div to the habit element
+    habitElement.appendChild(habitNameDiv);
+
+    const daysInMonth = new Date(yearSelect.value, monthSelect.selectedIndex + 1, 0).getDate();
+
+    for (let i = 0; i < daysInMonth; i++) {
+        const daySquare = document.createElement('div');
+        daySquare.classList.add('day-square', days[i] || 'bg-gray-200');
+        daySquare.dataset.day = i + 1;
+        daySquare.addEventListener('click', toggleColor);
+        habitElement.appendChild(daySquare);
     }
+    habitsList.appendChild(habitElement);
+}
 
     // New: Function to show the edit modal
     function showEditModal(habitElement) {
